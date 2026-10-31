@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Приглашение на вечернюю прогулку ✨</title>
+
+  <!-- Резервные кириллические шрифты Google Fonts на случай отсутствия локальных -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Montserrat:wght@400;600&family=Neucha&display=swap" rel="stylesheet">
+
+  <style>
+    /* Подключение шрифтов: Gagalin, Chunkfiveex (ChunkFive Ex), Riffic Bold */
+    @font-face {
+      font-family: 'Gagalin';
+      src: local('Gagalin'), local('Gagalin-Regular'),
+           url('https://db.onlinewebfonts.com/t/240a7cb10b49b02c94ceddc459d385a9.woff2') format('woff2'),
+           url('https://db.onlinewebfonts.com/t/240a7cb10b49b02c94ceddc459d385a9.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Chunkfiveex';
+      src: local('Chunkfiveex'), local('ChunkFive Ex'), local('ChunkFiveEx'),
+           url('https://db.onlinewebfonts.com/t/121c0534a4638305bbe716625832a5ba.woff2') format('woff2'),
+           url('https://db.onlinewebfonts.com/t/121c0534a4638305bbe716625832a5ba.woff') format('woff'),
+           url('https://db.onlinewebfonts.com/t/2b9a0c60d0ff123348c87437e4196073.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Riffic Bold';
+      src: local('Riffic Bold'), local('Riffic Free Bold'), local('Riffic-Bold'), local('Riffic'),
+           url('https://db.onlinewebfonts.com/t/a1caf164c402a3fc938700d04f021d6d.woff2') format('woff2'),
+           url('https://db.onlinewebfonts.com/t/a1caf164c402a3fc938700d04f021d6d.woff') format('woff'),
+           url('https://db.onlinewebfonts.com/t/7758223d2ea122c7494906c3e760bae0.woff2') format('woff2');
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg-deep: #13061f;
+      --bg-purple: #2b0f3c;
+      --bg-magenta: #581b4c;
+      --bg-rose: #862b63;
+      --accent-pink: #ff6398;
+      --accent-coral: #ff8c6b;
+      --accent-soft: #ffb8d0;
+      --glass-bg: rgba(42, 15, 58, 0.54);
+      --glass-border: rgba(255, 184, 212, 0.28);
+      --text-main: #fff6fa;
+      --text-muted: #f2cde0;
+
+      /* Шрифты:
+         - Gagalin: главные заголовки
+         - Chunkfiveex: кнопки, бейджи и подзаголовки разделов
+         - Riffic Bold: текст, чек-лист и слоты времени/дат */
+      --font-gagalin: 'Gagalin', 'Neucha', cursive, sans-serif;
+      --font-chunkfive: 'Chunkfiveex', 'ChunkFive Ex', 'ChunkFiveEx', 'Comfortaa', serif;
+      --font-riffic: 'Riffic Bold', 'Riffic Free Bold', 'Riffic', 'Comfortaa', sans-serif;
+      --font-ui: 'Riffic Bold', 'Comfortaa', 'Montserrat', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: var(--font-ui);
+      color: var(--text-main);
+      background: linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-purple) 36%, var(--bg-magenta) 72%, var(--bg-rose) 100%);
+      background-attachment: fixed;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Мягкое атмосферное свечение на заднем плане */
+    .ambient-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 22% 22%, rgba(255, 99, 152, 0.2) 0%, transparent 45%),
+        radial-gradient(circle at 78% 78%, rgba(255, 140, 107, 0.18) 0%, transparent 50%);
+    }
+
+    /* Холст с падающими светящимися частицами-сердечками */
+    #hearts-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Главная карточка с эффектом матового стекла (backdrop-filter: blur) */
+    .glass-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 540px;
+      min-height: 430px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 32px;
+      padding: 38px 30px;
+      box-shadow:
+        0 24px 64px rgba(10, 2, 18, 0.65),
+        0 0 42px rgba(255, 99, 152, 0.16),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .screen {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen.hidden {
+      display: none !important;
+    }
+
+    .screen.fade-in {
+      animation: screenAppear 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes screenAppear {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Декоративный бейдж — шрифт Chunkfiveex */
+    .evening-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      border-radius: 999px;
+      background: rgba(255, 99, 152, 0.16);
+      border: 1px solid rgba(255, 184, 208, 0.32);
+      color: var(--accent-soft);
+      font-family: var(--font-chunkfive);
+      font-size: 0.82rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(255, 99, 152, 0.18);
+    }
+
+    /* Заголовки — шрифт Gagalin */
+    .title-main {
+      font-family: var(--font-gagalin);
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      line-height: 1.25;
+      letter-spacing: 1px;
+      color: #ffffff;
+      text-shadow: 0 4px 18px rgba(255, 99, 152, 0.48);
+      margin-bottom: 14px;
+    }
+
+    /* Подзаголовок — шрифт Riffic Bold */
+    .subtitle-hint {
+      font-family: var(--font-riffic);
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.5;
+      max-width: 420px;
+    }
+
+    /* Блок кнопок выбора */
+    .buttons-arena {
+      width: 100%;
+      min-height: 115px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 8px;
+    }
+
+    .no-btn-placeholder {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 120px;
+      min-height: 54px;
+    }
+
+    /* Кнопки — шрифт Chunkfiveex */
+    .btn {
+      font-family: var(--font-chunkfive);
+      font-size: 1.12rem;
+      letter-spacing: 1.3px;
+      padding: 16px 38px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.28s ease,
+                  background 0.28s ease;
+    }
+
+    /* Статичная яркая кнопка «Да!» (увеличивается при наведении) */
+    .btn-yes {
+      position: relative;
+      background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-coral) 100%);
+      color: #fff;
+      font-weight: 700;
+      box-shadow:
+        0 10px 28px rgba(255, 99, 152, 0.52),
+        0 0 22px rgba(255, 140, 107, 0.4),
+        inset 0 2px 3px rgba(255, 255, 255, 0.42);
+      z-index: 3;
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.13);
+      box-shadow:
+        0 14px 36px rgba(255, 99, 152, 0.75),
+        0 0 32px rgba(255, 140, 107, 0.65),
+        inset 0 2px 4px rgba(255, 255, 255, 0.55);
+    }
+
+    .btn-yes:active {
+      transform: scale(1.05);
+    }
+
+    /* Сбегающая кнопка «Нет» */
+    .btn-no {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      border: 1.5px solid rgba(255, 184, 212, 0.34);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 15px 32px;
+      font-size: 1.05rem;
+      z-index: 10;
+      transition: left 0.24s cubic-bezier(0.25, 1, 0.5, 1),
+                  top 0.24s cubic-bezier(0.25, 1, 0.5, 1),
+                  transform 0.22s ease,
+                  background 0.3s ease;
+    }
+
+    .btn-no.humorous {
+      font-size: 0.88rem;
+      padding: 12px 18px;
+      background: rgba(255, 99, 152, 0.22);
+      border-color: rgba(255, 140, 107, 0.6);
+      color: #ffe8f0;
+      white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Маленькие сердечки, выскакивающие вокруг кнопки «Да!» */
+    .burst-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      font-size: 1.25rem;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 0 8px rgba(255, 99, 152, 0.9));
+    }
+
+    /* ================= ЭКРАН 2: КАЛЕНДАРЬ И СОГЛАСИЕ ================= */
+    .calendar-wrapper {
+      width: 100%;
+      max-height: 680px;
+      opacity: 1;
+      overflow: hidden;
+      transition: max-height 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease,
+                  margin 0.45s ease,
+                  transform 0.45s ease;
+      margin-top: 6px;
+    }
+
+    .calendar-wrapper.collapsed {
+      max-height: 0;
+      opacity: 0;
+      margin-top: 0;
+      transform: scale(0.95);
+      pointer-events: none;
+    }
+
+    .calendar-box {
+      background: rgba(22, 7, 34, 0.52);
+      border: 1px solid rgba(255, 184, 212, 0.26);
+      border-radius: 24px;
+      padding: 18px 16px;
+      text-align: left;
+      box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.28);
+    }
+
+    .cal-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    /* Заголовок месяца и дни недели — шрифт Chunkfiveex */
+    .cal-month-title {
+      font-family: var(--font-chunkfive);
+      font-size: 0.95rem;
+      color: #fff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .cal-nav-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 184, 212, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: background 0.2s ease;
+    }
+
+    .cal-nav-btn:hover {
+      background: rgba(255, 99, 152, 0.32);
+    }
+
+    .weekdays-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-family: var(--font-chunkfive);
+      font-size: 0.72rem;
+      color: var(--accent-soft);
+      opacity: 0.85;
+      margin-bottom: 6px;
+    }
+
+    .calendar-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+
+    /* Ячейки дат в календаре — шрифт Riffic Bold */
+    .cal-day {
+      aspect-ratio: 1;
+      max-height: 40px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 184, 212, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      font-family: var(--font-riffic);
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .cal-day.empty {
+      background: transparent;
+      border-color: transparent;
+      cursor: default;
+    }
+
+    .cal-day.past {
+      opacity: 0.28;
+      cursor: not-allowed;
+    }
+
+    .cal-day.today {
+      border-color: var(--accent-soft);
+      box-shadow: inset 0 0 8px rgba(255, 99, 152, 0.35);
+    }
+
+    .cal-day:not(.empty):not(.past):hover {
+      background: rgba(255, 99, 152, 0.28);
+      border-color: rgba(255, 184, 212, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .cal-day.selected {
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-coral));
+      border-color: #fff;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(255, 99, 152, 0.55);
+      transform: scale(1.06);
+    }
+
+    /* Подзаголовки разделов — шрифт Chunkfiveex */
+    .cal-step-label {
+      font-family: var(--font-chunkfive);
+      font-size: 0.8rem;
+      color: var(--accent-soft);
+      letter-spacing: 0.9px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Слоты времени — шрифт Riffic Bold */
+    .time-slots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .time-chip {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 184, 212, 0.22);
+      border-radius: 12px;
+      padding: 9px 6px;
+      text-align: center;
+      font-family: var(--font-riffic);
+      font-size: 0.92rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .time-chip:hover {
+      background: rgba(255, 99, 152, 0.24);
+      border-color: rgba(255, 184, 212, 0.5);
+    }
+
+    .time-chip.active {
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-coral));
+      border-color: #fff;
+      box-shadow: 0 5px 15px rgba(255, 99, 152, 0.45);
+      font-weight: 700;
+    }
+
+    .custom-time-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-family: var(--font-riffic);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding-top: 4px;
+    }
+
+    .custom-time-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .custom-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 184, 212, 0.35);
+      border-radius: 10px;
+      color: #fff;
+      padding: 6px 10px;
+      font-family: var(--font-riffic);
+      font-size: 0.88rem;
+      outline: none;
+      color-scheme: dark;
+    }
+
+    .btn-mini-ok {
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-coral));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 7px 12px;
+      font-family: var(--font-chunkfive);
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    /* Свернутая плашка с выбранной датой и временем */
+    .selected-summary-pill {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(255, 99, 152, 0.24), rgba(255, 140, 107, 0.18));
+      border: 1px solid rgba(255, 184, 212, 0.45);
+      border-radius: 18px;
+      padding: 12px 16px;
+      margin: 8px 0 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+      animation: screenAppear 0.45s ease forwards;
+    }
+
+    .selected-summary-pill.visible {
+      display: flex;
+    }
+
+    .summary-text {
+      font-family: var(--font-riffic);
+      font-size: 0.96rem;
+      color: #fff;
+      text-align: left;
+    }
+
+    .btn-change {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffe5f0;
+      border-radius: 999px;
+      padding: 6px 13px;
+      font-size: 0.74rem;
+      font-family: var(--font-chunkfive);
+      cursor: pointer;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-change:hover {
+      background: rgba(255, 99, 152, 0.4);
+    }
+
+    /* Финальный блок после выбора даты и времени */
+    .final-reveal {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      animation: screenAppear 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .final-reveal.visible {
+      display: flex;
+    }
+
+    .see-you-title {
+      font-family: var(--font-gagalin);
+      font-size: clamp(1.65rem, 4.8vw, 2.25rem);
+      color: #fff;
+      text-shadow: 0 0 24px rgba(255, 99, 152, 0.75);
+      margin: 4px 0 12px;
+    }
+
+    /* Текст подготовки вечера — шрифт Riffic Bold */
+    .prep-motivation {
+      font-family: var(--font-riffic);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border: 1px dashed rgba(255, 184, 212, 0.32);
+    }
+
+    /* Шуточный чек-лист перед выходом */
+    .checklist-card {
+      width: 100%;
+      background: rgba(19, 6, 31, 0.52);
+      border: 1px solid rgba(255, 184, 212, 0.28);
+      border-radius: 20px;
+      padding: 16px 18px;
+      text-align: left;
+    }
+
+    /* Подзаголовок чек-листа — шрифт Chunkfiveex */
+    .checklist-header {
+      font-family: var(--font-chunkfive);
+      font-size: 0.84rem;
+      color: var(--accent-soft);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    /* Пункты чек-листа — шрифт Riffic Bold */
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-riffic);
+      font-size: 0.98rem;
+      color: #fff;
+      padding: 8px 0;
+      line-height: 1.4;
+    }
+
+    .checklist-item + .checklist-item {
+      border-top: 1px solid rgba(255, 184, 212, 0.12);
+    }
+
+    .check-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-coral));
+      color: #fff;
+      font-weight: bold;
+      font-size: 0.88rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(255, 99, 152, 0.6);
+    }
+
+    .mail-status {
+      margin-top: 12px;
+      font-family: var(--font-riffic);
+      font-size: 0.8rem;
+      color: rgba(255, 215, 230, 0.78);
+      min-height: 1.2em;
+    }
+
+    @media (max-width: 480px) {
+      .glass-card {
+        padding: 28px 18px;
+        border-radius: 26px;
+      }
+      .btn {
+        padding: 14px 30px;
+      }
+      .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Декоративное мягкое свечение -->
+  <div class="ambient-glow"></div>
+
+  <!-- Динамический фон: падающие светящиеся сердечки с оплыванием курсора/касания -->
+  <canvas id="hearts-canvas"></canvas>
+
+  <!-- Главная карточка (эффект матового стекла) -->
+  <main class="glass-card" id="main-card">
+
+    <!-- ================= ЭКРАН 1: ГЛАВНЫЙ ЭКРАН (HERO) ================= -->
+    <section class="screen" id="screen-hero">
+      <div class="evening-badge">✨ Вечерняя прогулка ✨</div>
+
+      <!-- Заголовок из ТЗ -->
+      <h1 class="title-main" id="hero-title">Может прогуляемся на этой недели? ✨</h1>
+      <p class="subtitle-hint">Немного свежего воздуха, тёплые разговоры и самая уютная атмосфера вечера 🌙</p>
+
+      <div class="buttons-arena" id="buttons-arena">
+        <button type="button" class="btn btn-yes" id="btn-yes">Да! 💖</button>
+        <div class="no-btn-placeholder">
+          <button type="button" class="btn btn-no" id="btn-no">Нет</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ЭКРАН 2: ЭКРАН УСПЕХА / СОГЛАСИЯ ================= -->
+    <section class="screen hidden" id="screen-success">
+      <div class="evening-badge">💖 Ура, идём гулять! 💖</div>
+
+      <!-- Теплый заголовок из ТЗ -->
+      <h2 class="title-main">Теперь определимся со днем и времем ❤️</h2>
+
+      <!-- Компактная плашка с выбранной датой и временем (показывается после сворачивания календаря) -->
+      <div class="selected-summary-pill" id="selected-pill">
+        <div class="summary-text" id="summary-text">📅 Выбрано: —</div>
+        <button type="button" class="btn-change" id="btn-edit-datetime">Изменить</button>
+      </div>
+
+      <!-- Небольшой календарь в стиле сайта (автоматически сворачивается после выбора дня и времени) -->
+      <div class="calendar-wrapper" id="calendar-wrapper">
+        <div class="calendar-box">
+          <div class="cal-step-label">
+            <span>1. Выбери день в календаре</span>
+            <span id="step-day-hint" style="opacity:0.75;">📅</span>
+          </div>
+
+          <div class="cal-header-bar">
+            <button type="button" class="cal-nav-btn" id="prev-month" aria-label="Предыдущий месяц">‹</button>
+            <div class="cal-month-title" id="cal-month-title">Месяц</div>
+            <button type="button" class="cal-nav-btn" id="next-month" aria-label="Следующий месяц">›</button>
+          </div>
+
+          <div class="weekdays-row">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+          </div>
+
+          <div class="calendar-days-grid" id="calendar-days-grid"></div>
+
+          <div class="cal-step-label">
+            <span>2. Выбери время вечера</span>
+            <span id="step-time-hint" style="opacity:0.75;">🌙</span>
+          </div>
+
+          <div class="time-slots" id="time-slots">
+            <button type="button" class="time-chip" data-time="17:00">17:00 🌇</button>
+            <button type="button" class="time-chip" data-time="18:00">18:00 🌅</button>
+            <button type="button" class="time-chip" data-time="19:00">19:00 ✨</button>
+            <button type="button" class="time-chip" data-time="20:00">20:00 🌙</button>
+            <button type="button" class="time-chip" data-time="21:00">21:00 🌌</button>
+            <button type="button" class="time-chip" data-time="22:00">22:00 ⭐</button>
+          </div>
+
+          <div class="custom-time-row">
+            <span>Своё время:</span>
+            <div class="custom-time-controls">
+              <input type="time" id="custom-time-input" class="custom-input" value="19:30" />
+              <button type="button" class="btn-mini-ok" id="btn-custom-time-ok">Выбрать</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Финальный блок: рандомное прозвище + текст подготовки + шуточный чек-лист -->
+      <div class="final-reveal" id="final-reveal">
+        <h3 class="see-you-title" id="random-nickname-title">До встречи, любимая! 💖</h3>
+
+        <p class="prep-motivation">
+          Я уже начинаю готовить наш вечер — продумаю уютный маршрут и тёплую атмосферу ✨ Перед выходом сверься со списком:
+        </p>
+
+        <div class="checklist-card">
+          <div class="checklist-header">Шуточный чек-лист перед выходом:</div>
+          <div class="checklist-item">
+            <span class="check-icon">✓</span>
+            <span>Хорошее настроение</span>
+          </div>
+          <div class="checklist-item">
+            <span class="check-icon">✓</span>
+            <span>Взять тебя с собой (без тебя никуда💘)</span>
+          </div>
+        </div>
+
+        <div class="mail-status" id="mail-status"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    /* =========================================================================
+       1. ФОНОВАЯ АНИМАЦИЯ: ПЛАВНО ПАДАЮЩИЕ СВЕТЯЩИЕСЯ СЕРДЕЧКИ С «ОПЛЫВАНИЕМ»
+       ========================================================================= */
+    const canvas = document.getElementById('hearts-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const pointer = {
+      x: -9999,
+      y: -9999,
+      active: false,
+      radius: 135
+    };
+
+    window.addEventListener('mousemove', (e) => {
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+      pointer.active = true;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      pointer.active = false;
+    });
+
+    window.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        pointer.x = e.touches[0].clientX;
+        pointer.y = e.touches[0].clientY;
+        pointer.active = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        pointer.x = e.touches[0].clientX;
+        pointer.y = e.touches[0].clientY;
+        pointer.active = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      setTimeout(() => { pointer.active = false; }, 600);
+    });
+
+    class GlowingHeart {
+      constructor(initialRandomY = true) {
+        this.reset(initialRandomY);
+      }
+
+      reset(initialRandomY = false) {
+        this.x = Math.random() * width;
+        this.y = initialRandomY ? Math.random() * height : -30 - Math.random() * 60;
+        this.size = 7 + Math.random() * 12;
+        this.baseSpeedY = 0.65 + Math.random() * 1.15;
+        this.vx = 0;
+        this.vy = this.baseSpeedY;
+        this.swayAmp = 0.35 + Math.random() * 0.65;
+        this.swayFreq = 0.01 + Math.random() * 0.018;
+        this.phase = Math.random() * Math.PI * 2;
+        this.alpha = 0.38 + Math.random() * 0.48;
+        this.hue = 330 + Math.random() * 25;
+      }
+
+      update() {
+        this.phase += this.swayFreq;
+        let targetVx = Math.sin(this.phase) * this.swayAmp;
+        let targetVy = this.baseSpeedY;
+
+        // Эффект плавного оплывания вокруг курсора или места касания
+        if (pointer.active) {
+          const dx = this.x - pointer.x;
+          const dy = this.y - pointer.y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < pointer.radius && dist > 0.001) {
+            const influence = Math.pow(1 - dist / pointer.radius, 1.55);
+            const nx = dx / dist;
+            const ny = dy / dist;
+
+            // Вектор обтекания (тангенциальное скольжение по дуге вокруг курсора)
+            const tangentDir = dx >= 0 ? 1 : -1;
+            const tx = tangentDir * Math.abs(ny);
+            const ty = Math.abs(nx) * 0.65;
+
+            targetVx += (nx * 3.8 + tx * 3.4) * influence;
+            targetVy += (ny * 2.5 + ty * 1.9) * influence;
+          }
+        }
+
+        this.vx += (targetVx - this.vx) * 0.12;
+        this.vy += (targetVy - this.vy) * 0.12;
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.y > height + 40) {
+          this.reset(false);
+        }
+        if (this.x < -40) this.x = width + 30;
+        if (this.x > width + 40) this.x = -30;
+      }
+
+      draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+
+        const angle = Math.atan2(this.vx, Math.max(0.5, this.vy)) * 0.35;
+        ctx.rotate(angle);
+
+        const s = this.size;
+        ctx.beginPath();
+        ctx.moveTo(0, s * 0.3);
+        ctx.bezierCurveTo(0, 0, -s * 0.55, 0, -s * 0.55, s * 0.35);
+        ctx.bezierCurveTo(-s * 0.55, s * 0.7, 0, s * 0.95, 0, s * 1.2);
+        ctx.bezierCurveTo(0, s * 0.95, s * 0.55, s * 0.7, s * 0.55, s * 0.35);
+        ctx.bezierCurveTo(s * 0.55, 0, 0, 0, 0, s * 0.3);
+        ctx.closePath();
+
+        ctx.shadowColor = `hsla(${this.hue}, 100%, 72%, 0.95)`;
+        ctx.shadowBlur = 16;
+        ctx.fillStyle = `hsla(${this.hue}, 95%, 78%, ${this.alpha})`;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const HEARTS_COUNT = Math.min(55, Math.max(28, Math.floor(window.innerWidth / 24)));
+    const hearts = Array.from({ length: HEARTS_COUNT }, () => new GlowingHeart(true));
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, width, height);
+
+      if (pointer.active) {
+        const grad = ctx.createRadialGradient(pointer.x, pointer.y, 4, pointer.x, pointer.y, pointer.radius * 0.85);
+        grad.addColorStop(0, 'rgba(255, 130, 175, 0.13)');
+        grad.addColorStop(1, 'rgba(255, 130, 175, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(pointer.x, pointer.y, pointer.radius * 0.85, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      for (const h of hearts) {
+        h.update();
+        h.draw(ctx);
+      }
+      requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+
+    /* =========================================================================
+       2. КНОПКА «ДА!» (С САЛЮТОМ СЕРДЕЧЕК) И СБЕГАЮЩАЯ КНОПКА «НЕТ»
+       ========================================================================= */
+    const mainCard = document.getElementById('main-card');
+    const btnYes = document.getElementById('btn-yes');
+    const btnNo = document.getElementById('btn-no');
+    const screenHero = document.getElementById('screen-hero');
+    const screenSuccess = document.getElementById('screen-success');
+
+    let noEscapeCount = 0;
+
+    function moveNoButton(e) {
+      if (e && e.type === 'touchstart') {
+        e.preventDefault();
+      }
+
+      noEscapeCount++;
+
+      // После нескольких попыток меняем текст на «Нет это даже не рассматривается🙃»
+      if (noEscapeCount >= 3) {
+        btnNo.textContent = 'Нет это даже не рассматривается🙃';
+        btnNo.classList.add('humorous');
+      }
+
+      const cardRect = mainCard.getBoundingClientRect();
+      const yesRect = btnYes.getBoundingClientRect();
+
+      // Позиционируем кнопку абсолютно внутри главной карточки (.glass-card)
+      btnNo.style.position = 'absolute';
+
+      const btnWidth = btnNo.offsetWidth || 140;
+      const btnHeight = btnNo.offsetHeight || 48;
+
+      const pad = 18;
+      const minX = pad;
+      const maxX = Math.max(pad, cardRect.width - btnWidth - pad);
+      const minY = pad;
+      const maxY = Math.max(pad, cardRect.height - btnHeight - pad);
+
+      const yesRelCenterX = (yesRect.left - cardRect.left) + yesRect.width / 2;
+      const yesRelCenterY = (yesRect.top - cardRect.top) + yesRect.height / 2;
+
+      let nextX = minX;
+      let nextY = minY;
+
+      for (let i = 0; i < 20; i++) {
+        const candidateX = minX + Math.random() * (maxX - minX);
+        const candidateY = minY + Math.random() * (maxY - minY);
+
+        const candCenterX = candidateX + btnWidth / 2;
+        const candCenterY = candidateY + btnHeight / 2;
+
+        // Не даём кнопке «Нет» перекрывать кнопку «Да!»
+        const distToYes = Math.hypot(candCenterX - yesRelCenterX, candCenterY - yesRelCenterY);
+        if (distToYes > 110) {
+          nextX = candidateX;
+          nextY = candidateY;
+          break;
+        }
+      }
+
+      btnNo.style.left = `${nextX}px`;
+      btnNo.style.top = `${nextY}px`;
+    }
+
+    btnNo.addEventListener('mouseenter', moveNoButton);
+    btnNo.addEventListener('touchstart', moveNoButton, { passive: false });
+    btnNo.addEventListener('click', moveNoButton);
+
+    // Выскакивающие маленькие сердечки вокруг кнопки «Да!»
+    function spawnHeartsBurst(targetEl) {
+      const rect = targetEl.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const symbols = ['💖', '💗', '💓', '💘', '✨', '❤️'];
+      const count = 22;
+
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('span');
+        el.className = 'burst-heart';
+        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+        const startOffsetX = (Math.random() - 0.5) * rect.width * 0.85;
+        const startOffsetY = (Math.random() - 0.5) * rect.height * 0.85;
+        el.style.left = `${centerX + startOffsetX}px`;
+        el.style.top = `${centerY + startOffsetY}px`;
+        document.body.appendChild(el);
+
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.45;
+        const distance = 55 + Math.random() * 85;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance - 20;
+        const rot = (Math.random() - 0.5) * 90;
+        const scale = 0.65 + Math.random() * 0.75;
+
+        el.animate([
+          { transform: 'translate(-50%, -50%) scale(0.25) rotate(0deg)', opacity: 1 },
+          { transform: `translate(calc(-50% + ${tx * 0.7}px), calc(-50% + ${ty * 0.7}px)) scale(${scale}) rotate(${rot * 0.6}deg)`, opacity: 1, offset: 0.6 },
+          { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty + 28}px)) scale(0.15) rotate(${rot}deg)`, opacity: 0 }
+        ], {
+          duration: 720 + Math.random() * 320,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+        }).onfinish = () => el.remove();
+      }
+    }
+
+    btnYes.addEventListener('click', () => {
+      spawnHeartsBurst(btnYes);
+
+      setTimeout(() => {
+        screenHero.classList.add('hidden');
+        screenSuccess.classList.remove('hidden');
+        screenSuccess.classList.add('fade-in');
+      }, 540);
+    });
+
+    /* =========================================================================
+       3. КАЛЕНДАРЬ, СВОРАЧИВАНИЕ, РАНДОМНОЕ ПРОЗВИЩЕ И ОТПРАВКА НА ПОЧТУ
+       ========================================================================= */
+    const calMonthTitle = document.getElementById('cal-month-title');
+    const calendarDaysGrid = document.getElementById('calendar-days-grid');
+    const prevMonthBtn = document.getElementById('prev-month');
+    const nextMonthBtn = document.getElementById('next-month');
+    const timeChips = document.querySelectorAll('.time-chip');
+    const customTimeInput = document.getElementById('custom-time-input');
+    const btnCustomTimeOk = document.getElementById('btn-custom-time-ok');
+
+    const calendarWrapper = document.getElementById('calendar-wrapper');
+    const selectedPill = document.getElementById('selected-pill');
+    const summaryText = document.getElementById('summary-text');
+    const btnEditDatetime = document.getElementById('btn-edit-datetime');
+    const finalReveal = document.getElementById('final-reveal');
+    const randomNicknameTitle = document.getElementById('random-nickname-title');
+    const mailStatus = document.getElementById('mail-status');
+    const stepDayHint = document.getElementById('step-day-hint');
+    const stepTimeHint = document.getElementById('step-time-hint');
+
+    const NICKNAMES = ['принцесса', 'бусинка', 'любимая'];
+    const WEEKDAYS_FULL = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+    const MONTHS_GEN = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    const MONTHS_NOM = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let viewYear = today.getFullYear();
+    let viewMonth = today.getMonth();
+
+    let selectedDateIso = '';
+    let selectedDateHuman = '';
+    let selectedTime = '';
+    let collapseTimer = null;
+
+    function toIsoStringLocal(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+
+    function formatHumanDate(year, month, day) {
+      const dateObj = new Date(year, month, day);
+      return `${WEEKDAYS_FULL[dateObj.getDay()]}, ${day} ${MONTHS_GEN[month]}`;
+    }
+
+    function renderCalendar(year, month) {
+      calendarDaysGrid.innerHTML = '';
+      calMonthTitle.textContent = `${MONTHS_NOM[month]} ${year}`;
+
+      const firstDayOfMonth = new Date(year, month, 1);
+      // Приводим день недели к формату Пн=0 ... Вс=6
+      const startWeekday = (firstDayOfMonth.getDay() + 6) % 7;
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < startWeekday; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'cal-day empty';
+        calendarDaysGrid.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cellDate = new Date(year, month, day);
+        const iso = toIsoStringLocal(year, month, day);
+        const cell = document.createElement('button');
+        cell.type = 'button';
+        cell.className = 'cal-day';
+        cell.textContent = day;
+
+        if (cellDate < today) {
+          cell.classList.add('past');
+          cell.disabled = true;
+        } else {
+          if (cellDate.getTime() === today.getTime()) {
+            cell.classList.add('today');
+          }
+          if (iso === selectedDateIso) {
+            cell.classList.add('selected');
+          }
+
+          cell.addEventListener('click', () => {
+            selectedDateIso = iso;
+            selectedDateHuman = formatHumanDate(year, month, day);
+            stepDayHint.textContent = `✓ ${day} ${MONTHS_GEN[month]}`;
+
+            document.querySelectorAll('.cal-day').forEach(c => c.classList.remove('selected'));
+            cell.classList.add('selected');
+
+            tryAutoCollapse(cell);
+          });
+        }
+
+        calendarDaysGrid.appendChild(cell);
+      }
+    }
+
+    prevMonthBtn.addEventListener('click', () => {
+      viewMonth--;
+      if (viewMonth < 0) {
+        viewMonth = 11;
+        viewYear--;
+      }
+      renderCalendar(viewYear, viewMonth);
+    });
+
+    nextMonthBtn.addEventListener('click', () => {
+      viewMonth++;
+      if (viewMonth > 11) {
+        viewMonth = 0;
+        viewYear++;
+      }
+      renderCalendar(viewYear, viewMonth);
+    });
+
+    renderCalendar(viewYear, viewMonth);
+
+    // Выбор слота времени
+    timeChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        timeChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        selectedTime = chip.dataset.time;
+        customTimeInput.value = selectedTime;
+        stepTimeHint.textContent = `✓ ${selectedTime}`;
+
+        tryAutoCollapse(chip);
+      });
+    });
+
+    // Выбор своего времени через кнопку «Выбрать»
+    btnCustomTimeOk.addEventListener('click', () => {
+      if (!customTimeInput.value) return;
+      selectedTime = customTimeInput.value;
+      timeChips.forEach(c => {
+        c.classList.toggle('active', c.dataset.time === selectedTime);
+      });
+      stepTimeHint.textContent = `✓ ${selectedTime}`;
+
+      tryAutoCollapse(btnCustomTimeOk);
+    });
+
+    // Как только выбраны И дата, И время — календарь плавно сворачивается
+    function tryAutoCollapse(triggerElement) {
+      if (!selectedDateIso || !selectedTime) return;
+
+      if (collapseTimer) clearTimeout(collapseTimer);
+      spawnHeartsBurst(triggerElement);
+
+      collapseTimer = setTimeout(() => {
+        finalizeDateTimeSelection();
+      }, 420);
+    }
+
+    // Сохранение в локальную базу + автоматическая отправка на почту mlankorov@gmail.com
+    async function sendSelectionToEmail(dateHuman, isoDate, timeStr, nicknameUsed) {
+      const payloadRecord = {
+        dateHuman,
+        isoDate,
+        time: timeStr,
+        nickname: nicknameUsed,
+        timestamp: new Date().toLocaleString('ru-RU')
+      };
+
+      // Сохраняем локально в браузере (localStorage)
+      try {
+        const savedList = JSON.parse(localStorage.getItem('evening_walk_selections') || '[]');
+        savedList.push(payloadRecord);
+        localStorage.setItem('evening_walk_selections', JSON.stringify(savedList));
+      } catch (e) {
+        console.warn('localStorage недоступен', e);
+      }
+
+      // Отправляем письмо на mlankorov@gmail.com
+      mailStatus.textContent = '💌 Отправляю время нашей встречи...';
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/mlankorov@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: `💖 Приглашение принято! Прогулка: ${dateHuman} в ${timeStr}`,
+            Событие: 'Выбраны день и время вечерней прогулки ✨',
+            День_встречи: `${dateHuman} (${isoDate})`,
+            Время_встречи: timeStr,
+            Выпавшее_прозвище: nicknameUsed,
+            Отправлено: payloadRecord.timestamp,
+            _template: 'table'
+          })
+        });
+
+        if (res.ok) {
+          mailStatus.textContent = '✨ Дата и время отправлены! Жду нашей встречи ❤️';
+        } else {
+          mailStatus.textContent = '✨ Выбор сохранён! До скорой встречи ❤️';
+        }
+      } catch (err) {
+        mailStatus.textContent = '✨ Выбор сохранён! До скорой встречи ❤️';
+      }
+    }
+
+    function finalizeDateTimeSelection() {
+      // 1. Случайный выбор одного из трёх прозвищ: принцесса / бусинка / любимая
+      const randomNickname = NICKNAMES[Math.floor(Math.random() * NICKNAMES.length)];
+      randomNicknameTitle.textContent = `До встречи, ${randomNickname}! 💖`;
+
+      // 2. Сворачиваем календарь и показываем компактную строку выбора
+      calendarWrapper.classList.add('collapsed');
+      summaryText.textContent = `📅 ${selectedDateHuman} в ${selectedTime}`;
+      selectedPill.classList.add('visible');
+
+      // 3. Показываем финальный блок с прозвищем, подготовкой вечера и чек-листом
+      finalReveal.classList.add('visible');
+
+      // 4. Автоматически отправляем результат на почту mlankorov@gmail.com
+      sendSelectionToEmail(selectedDateHuman, selectedDateIso, selectedTime, randomNickname);
+    }
+
+    // Кнопка «Изменить» на случай, если захочется перевыбрать дату или время
+    btnEditDatetime.addEventListener('click', () => {
+      calendarWrapper.classList.remove('collapsed');
+      selectedPill.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>
